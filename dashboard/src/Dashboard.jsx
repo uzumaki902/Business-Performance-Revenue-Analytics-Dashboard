@@ -577,43 +577,20 @@ export default function Dashboard() {
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <div className="flex bg-white border border-slate-200 rounded-lg p-1 text-sm">
-            {[
-              [1, "Today"],
-              [7, "Last 7 Days"],
-              [30, "Last 30 Days"],
-              ["custom", "Custom"],
-            ].map(([v, t]) => (
-              <button
-                key={v}
-                onClick={() => setPreset(v)}
-                className={`px-3 py-1.5 rounded-md ${preset === v ? "bg-blue-600 text-white" : "text-slate-600 hover:bg-slate-100"}`}
-              >
-                {t}
-              </button>
-            ))}
-          </div>
-          {preset === "custom" && (
-            <div className="flex items-center gap-1 text-sm">
-              <input
-                type="date"
-                value={cFrom}
-                min={iso(addD(TODAY, -120))}
-                max={iso(TODAY)}
-                onChange={(e) => e.target.value && setCFrom(e.target.value)}
-                className="border border-slate-200 rounded-lg px-2 py-1.5 bg-white"
-              />
-              <span>–</span>
-              <input
-                type="date"
-                value={cTo}
-                min={iso(addD(TODAY, -120))}
-                max={iso(TODAY)}
-                onChange={(e) => e.target.value && setCTo(e.target.value)}
-                className="border border-slate-200 rounded-lg px-2 py-1.5 bg-white"
-              />
+          <div className="relative">
+            <div className="flex bg-white border border-slate-200 rounded-lg p-1 text-sm">
+              {[[1, "Today"], [7, "Last 7 Days"], [30, "Last 30 Days"], ["custom", "Custom"]].map(([v, t]) => (
+                <button key={v} onClick={() => setPreset(v)} className={`px-3 py-1.5 rounded-md whitespace-nowrap ${preset === v ? "bg-blue-600 text-white" : "text-slate-600 hover:bg-slate-100"}`}>{t}</button>
+              ))}
             </div>
-          )}
+            {preset === "custom" && (
+              <div className="absolute right-0 top-full mt-2 z-40 flex items-center gap-2 bg-white border border-slate-200 rounded-lg shadow-lg p-3 text-sm">
+                <input type="date" value={cFrom} min={iso(addD(TODAY, -120))} max={iso(TODAY)} onChange={(e) => e.target.value && setCFrom(e.target.value)} className="border border-slate-200 rounded-lg px-2 py-1.5 bg-white" />
+                <span>–</span>
+                <input type="date" value={cTo} min={iso(addD(TODAY, -120))} max={iso(TODAY)} onChange={(e) => e.target.value && setCTo(e.target.value)} className="border border-slate-200 rounded-lg px-2 py-1.5 bg-white" />
+              </div>
+            )}
+          </div>
           <select
             value={owner}
             onChange={(e) => setOwner(e.target.value)}
